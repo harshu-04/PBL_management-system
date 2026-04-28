@@ -2,6 +2,7 @@ import { useState, useEffect, createContext, useContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import DashboardLayout from '../../components/DashboardLayout';
 import StatCard from '../../components/StatCard';
+import MagneticButton from '../../components/MagneticButton';
 import ProgressBar from '../../components/ProgressBar';
 import { useAuth } from '../../context/AuthContext';
 import { getActivePhase, getTeams, getTeamSubmissions, submitPhase, getMeetings, requestMeeting, getSubjects, createTeam, joinTeam } from '../../utils/api';
@@ -38,7 +39,7 @@ function StudentOverview() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-800">Welcome back, {user?.name} 👋</h1>
+        <h1 className="text-3xl font-bold text-slate-200">Welcome back, {user?.name} 👋</h1>
         <p className="text-slate-500 mt-1">Track your project progress and submit your work for {activeTeam?.name || 'this team'}.</p>
       </div>
 
@@ -50,7 +51,7 @@ function StudentOverview() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+        <div className="lg:col-span-2 glass-panel p-6 rounded-2xl shadow-sm border border-white/10">
           <ProgressBar progress={activeTeam?.progress || 0} showSegments />
 
           {!activeTeam && (
@@ -66,14 +67,14 @@ function StudentOverview() {
             ) : (
               <div className="space-y-3">
                 {submissions.map(sub => (
-                  <div key={sub._id} className="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
+                  <div key={sub._id} className="flex items-center justify-between p-3 bg-[#161b22]/50 rounded-xl">
                     <div className="flex items-center gap-3">
                       <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-white text-xs font-bold
                         ${sub.grade === 1 ? 'bg-green-500' : sub.grade === 0 ? 'bg-red-500' : 'bg-amber-500'}`}>
                         P{sub.phaseNumber}
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-slate-700">Phase {sub.phaseNumber}: {phaseNames[sub.phaseNumber]}</p>
+                        <p className="text-sm font-medium text-slate-300">Phase {sub.phaseNumber}: {phaseNames[sub.phaseNumber]}</p>
                         <p className="text-xs text-slate-500">{new Date(sub.createdAt).toLocaleDateString()}</p>
                       </div>
                     </div>
@@ -88,22 +89,22 @@ function StudentOverview() {
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-          <h3 className="text-lg font-semibold text-slate-800 mb-4">Team Members</h3>
+        <div className="glass-panel p-6 rounded-2xl shadow-sm border border-white/10">
+          <h3 className="text-lg font-semibold text-slate-200 mb-4">Team Members</h3>
           {activeTeam?.members?.map(m => (
             <div key={m._id} className="flex items-center gap-3 py-3 border-b border-slate-50 last:border-0">
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-cyan-400 flex items-center justify-center text-white text-xs font-bold">
                 {m.name?.[0] || '?'}
               </div>
               <div>
-                <p className="text-sm font-medium text-slate-700">{m.name}</p>
+                <p className="text-sm font-medium text-slate-300">{m.name}</p>
                 <p className="text-xs text-slate-500">{m.email}</p>
               </div>
             </div>
           ))}
-          <div className="mt-4 pt-4 border-t border-slate-100">
+          <div className="mt-4 pt-4 border-t border-white/10">
             <p className="text-xs text-slate-500">Mentor</p>
-            <p className="text-sm font-medium text-slate-700">{activeTeam?.mentor?.name || 'Unassigned'}</p>
+            <p className="text-sm font-medium text-slate-300">{activeTeam?.mentor?.name || 'Unassigned'}</p>
           </div>
         </div>
       </div>
@@ -157,10 +158,10 @@ function CreateJoinTeam({ onTeamJoined }) {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden w-full max-w-2xl mx-auto">
-      <div className="flex border-b border-slate-100">
-        <button onClick={() => setMode('create')} className={`flex-1 py-4 font-semibold text-sm transition-colors ${mode === 'create' ? 'bg-blue-50 text-blue-700 border-b-2 border-blue-600' : 'text-slate-500 hover:bg-slate-50'}`}>Create a Team</button>
-        <button onClick={() => setMode('join')} className={`flex-1 py-4 font-semibold text-sm transition-colors ${mode === 'join' ? 'bg-blue-50 text-blue-700 border-b-2 border-blue-600' : 'text-slate-500 hover:bg-slate-50'}`}>Join a Team</button>
+    <div className="glass-panel rounded-2xl shadow-sm border border-white/10 overflow-hidden w-full max-w-2xl mx-auto">
+      <div className="flex border-b border-white/10">
+        <button onClick={() => setMode('create')} className={`flex-1 py-4 font-semibold text-sm transition-colors ${mode === 'create' ? 'bg-blue-50 text-blue-700 border-b-2 border-blue-600' : 'text-slate-500 hover:bg-[#161b22]/50'}`}>Create a Team</button>
+        <button onClick={() => setMode('join')} className={`flex-1 py-4 font-semibold text-sm transition-colors ${mode === 'join' ? 'bg-blue-50 text-blue-700 border-b-2 border-blue-600' : 'text-slate-500 hover:bg-[#161b22]/50'}`}>Join a Team</button>
       </div>
 
       {msg.text && (
@@ -172,27 +173,27 @@ function CreateJoinTeam({ onTeamJoined }) {
       <div className="p-8">
         {mode === 'create' ? (
           <form onSubmit={handleCreate}>
-            <label className="block text-sm font-medium text-slate-700 mb-2">
+            <label className="block text-sm font-medium text-slate-300 mb-2">
               Select Subject Area
               {user?.semester && <span className="text-xs text-blue-600 ml-2 font-normal">(Showing subjects for Semester {user.semester})</span>}
             </label>
             <select value={subjectId} onChange={e => setSubjectId(e.target.value)} required
-              className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 mb-6">
+              className="w-full px-4 py-3 bg-[#161b22]/50 border border-white/20 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 mb-6">
               <option value="">-- Choose a Subject --</option>
               {subjects.map(s => <option key={s._id} value={s._id}>{s.name} ({s.code}_{s.semester})</option>)}
             </select>
-            <button type="submit" disabled={loading} className="w-full py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 disabled:opacity-50 transition-all">
+            <MagneticButton type="submit" disabled={loading} className="w-full py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 disabled:opacity-50 transition-all">
               {loading ? 'Creating...' : 'Create Team & Auto-Assign Mentor'}
-            </button>
+            </MagneticButton>
           </form>
         ) : (
           <form onSubmit={handleJoin}>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Team Number</label>
+            <label className="block text-sm font-medium text-slate-300 mb-2">Team Number</label>
             <input type="text" value={teamNo} onChange={e => setTeamNo(e.target.value)} placeholder="e.g. FULLSTACK_6_01" required
-              className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 mb-6 uppercase" />
-            <button type="submit" disabled={loading} className="w-full py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 disabled:opacity-50 transition-all">
+              className="w-full px-4 py-3 glass-panel border border-white/20 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 mb-6 uppercase" />
+            <MagneticButton type="submit" disabled={loading} className="w-full py-3 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 disabled:opacity-50 transition-all">
               {loading ? 'Joining...' : 'Join Team'}
-            </button>
+            </MagneticButton>
           </form>
         )}
       </div>
@@ -205,7 +206,7 @@ function EmptyStateWelcome({ onTeamJoined }) {
     <div className="max-w-2xl mx-auto py-10">
       <div className="text-center mb-10">
         <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center text-4xl mx-auto mb-4">👋</div>
-        <h1 className="text-3xl font-bold text-slate-800">Welcome to PBL</h1>
+        <h1 className="text-3xl font-bold text-slate-200">Welcome to PBL</h1>
         <p className="text-slate-500 mt-2">You are not in a team yet. Create a new team or join an existing one to get started.</p>
       </div>
       <CreateJoinTeam onTeamJoined={onTeamJoined} />
@@ -272,7 +273,7 @@ function SubmitWork() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-slate-800 mb-2">Submit Work</h1>
+      <h1 className="text-3xl font-bold text-slate-200 mb-2">Submit Work</h1>
       <p className="text-slate-500 mb-8">Submit your project work for <span className="font-semibold text-blue-600">Phase {phase}: {phaseNames[phase]}</span></p>
 
       {msg && (
@@ -288,7 +289,7 @@ function SubmitWork() {
           </div>
           <p className="text-sm text-red-600 mb-2">Your previous submission was rejected. Please address mentor feedback before resubmitting.</p>
           {currentSub.feedback && (
-            <div className="text-xs bg-white/50 p-3 rounded-lg text-slate-700 font-mono border border-red-50">
+            <div className="text-xs glass-panel/50 p-3 rounded-lg text-slate-300 font-mono border border-red-50">
                <b>Feedback:</b> {currentSub.feedback}
             </div>
           )}
@@ -296,11 +297,11 @@ function SubmitWork() {
       )}
 
       {blockSubmission ? (
-        <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 text-center">
+        <div className="glass-panel p-8 rounded-2xl shadow-sm border border-white/10 text-center">
           <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-green-100 flex items-center justify-center text-3xl">
             {isAccepted ? '✅' : '⏳'}
           </div>
-          <h3 className="text-lg font-semibold text-slate-800 mb-2">
+          <h3 className="text-lg font-semibold text-slate-200 mb-2">
             {isAccepted ? `Phase ${phase} Accepted` : `Phase ${phase} Pending Review`}
           </h3>
           <p className="text-slate-500 text-sm">
@@ -310,12 +311,12 @@ function SubmitWork() {
           </p>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+        <form onSubmit={handleSubmit} className="glass-panel p-6 rounded-2xl shadow-sm border border-white/10">
           <div className="mb-4">
-            <label className="block text-sm font-medium text-slate-700 mb-2">
+            <label className="block text-sm font-medium text-slate-300 mb-2">
               Synopsis PDF Upload <span className="text-red-500">*</span>
             </label>
-            <div className={`relative border-2 border-dashed rounded-xl p-8 text-center transition-colors ${synopsisFile ? 'border-blue-400 bg-blue-50' : 'border-slate-200 hover:border-blue-300'}`}>
+            <div className={`relative border-2 border-dashed rounded-xl p-8 text-center transition-colors ${synopsisFile ? 'border-blue-400 bg-blue-50' : 'border-white/20 hover:border-blue-300'}`}>
               <input
                 id="synopsis-upload"
                 type="file"
@@ -329,7 +330,7 @@ function SubmitWork() {
                   <p className="text-sm font-semibold text-blue-700">{synopsisFile.name}</p>
                 ) : (
                   <>
-                    <p className="text-sm font-medium text-slate-600">Click or drag & drop your PDF here</p>
+                    <p className="text-sm font-medium text-slate-300">Click or drag & drop your PDF here</p>
                     <p className="text-xs text-slate-400 mt-1">PDF only · Max 5MB</p>
                   </>
                 )}
@@ -337,21 +338,21 @@ function SubmitWork() {
             </div>
           </div>
           <div className="mb-6">
-            <label className="block text-sm font-medium text-slate-700 mb-2">GitHub Repository Link</label>
+            <label className="block text-sm font-medium text-slate-300 mb-2">GitHub Repository Link</label>
             <input
               type="url"
               value={githubLink}
               onChange={e => setGithubLink(e.target.value)}
               placeholder="Optional: https://github.com/..."
-              className="w-full px-4 py-3 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 border border-white/20 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div className="flex items-center justify-between">
             <p className="text-xs text-slate-500">Team: {activeTeam?.teamNo}</p>
-            <button type="submit" disabled={loading || !synopsisFile}
+            <MagneticButton type="submit" disabled={loading || !synopsisFile}
               className="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl text-sm font-medium hover:shadow-lg hover:shadow-blue-200 transition-all duration-300 disabled:opacity-50 cursor-pointer">
               {loading ? 'Uploading...' : isRejected ? '📤 Update & Resubmit' : '🚀 Submit Phase'}
-            </button>
+            </MagneticButton>
           </div>
         </form>
       )}
@@ -379,27 +380,27 @@ function StudentProgress() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-slate-800 mb-2">Progress Tracker</h1>
+      <h1 className="text-3xl font-bold text-slate-200 mb-2">Progress Tracker</h1>
       <p className="text-slate-500 mb-8">Your team's progress through the project lifecycle.</p>
 
-      <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 mb-8">
+      <div className="glass-panel p-6 rounded-2xl shadow-sm border border-white/10 mb-8">
         <ProgressBar progress={activeTeam?.progress || 0} showSegments />
       </div>
 
-      <h3 className="text-lg font-semibold text-slate-800 mb-4">Phase Details</h3>
+      <h3 className="text-lg font-semibold text-slate-200 mb-4">Phase Details</h3>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         {[1, 2, 3].map(p => {
           const sub = submissions.find(s => s.phaseNumber === p);
           return (
-            <div key={p} className={`bg-white p-6 rounded-2xl shadow-sm border-2 transition-all
-              ${sub?.grade === 1 ? 'border-green-300 bg-green-50/30' : sub?.grade === 0 ? 'border-red-300 bg-red-50/30' : sub ? 'border-amber-300 bg-amber-50/30' : 'border-slate-100'}`}>
+            <div key={p} className={`glass-panel p-6 rounded-2xl shadow-sm border-2 transition-all
+              ${sub?.grade === 1 ? 'border-green-300 bg-green-50/30' : sub?.grade === 0 ? 'border-red-300 bg-red-50/30' : sub ? 'border-amber-300 bg-amber-50/30' : 'border-white/10'}`}>
               <div className="flex items-center gap-3 mb-4">
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-sm
                   ${sub?.grade === 1 ? 'bg-green-500' : sub?.grade === 0 ? 'bg-red-500' : sub ? 'bg-amber-500' : 'bg-slate-300'}`}>
                   {p}
                 </div>
                 <div>
-                  <h4 className="font-semibold text-slate-800">Phase {p}</h4>
+                  <h4 className="font-semibold text-slate-200">Phase {p}</h4>
                   <p className="text-xs text-slate-500">{phaseNames[p]}</p>
                 </div>
               </div>
@@ -414,17 +415,17 @@ function StudentProgress() {
                   {sub.grade !== undefined && sub.grade !== null && (
                     <div className="flex justify-between text-sm">
                       <span className="text-slate-500">Outcome</span>
-                      <span className="font-bold text-slate-800">{sub.grade === 1 ? 'Accepted' : 'Rejected'}</span>
+                      <span className="font-bold text-slate-200">{sub.grade === 1 ? 'Accepted' : 'Rejected'}</span>
                     </div>
                   )}
                   {sub.performance && Array.isArray(sub.performance) && sub.performance.find(perf => perf.studentId?._id === user?._id || perf.studentId === user?._id) && (
-                    <div className="mt-3 p-3 bg-white border border-slate-100 rounded-lg shadow-sm">
-                      <p className="text-xs font-semibold text-slate-600 uppercase mb-1">My Performance</p>
+                    <div className="mt-3 p-3 glass-panel border border-white/10 rounded-lg shadow-sm">
+                      <p className="text-xs font-semibold text-slate-300 uppercase mb-1">My Performance</p>
                       <div className="flex justify-between text-xs mb-1">
                         <span className="text-slate-500">Marks:</span>
-                        <span className="font-bold text-slate-800">{sub.performance.find(perf => perf.studentId?._id === user?._id || perf.studentId === user?._id).marks}/10</span>
+                        <span className="font-bold text-slate-200">{sub.performance.find(perf => perf.studentId?._id === user?._id || perf.studentId === user?._id).marks}/10</span>
                       </div>
-                      <p className="text-xs text-slate-600 italic">"{sub.performance.find(perf => perf.studentId?._id === user?._id || perf.studentId === user?._id).remark}"</p>
+                      <p className="text-xs text-slate-300 italic">"{sub.performance.find(perf => perf.studentId?._id === user?._id || perf.studentId === user?._id).remark}"</p>
                     </div>
                   )}
                 </div>
@@ -483,7 +484,7 @@ function StudentMeetings() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-slate-800 mb-2">Meetings</h1>
+      <h1 className="text-3xl font-bold text-slate-200 mb-2">Meetings</h1>
       <p className="text-slate-500 mb-8">Request and track meetings with your mentor for {activeTeam?.teamNo || activeTeam?.name}.</p>
 
       {msg && (
@@ -492,37 +493,37 @@ function StudentMeetings() {
         </div>
       )}
 
-      <form onSubmit={handleRequest} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 mb-8">
-        <h3 className="text-lg font-semibold text-slate-800 mb-4">Request a Meeting</h3>
+      <form onSubmit={handleRequest} className="glass-panel p-6 rounded-2xl shadow-sm border border-white/10 mb-8">
+        <h3 className="text-lg font-semibold text-slate-200 mb-4">Request a Meeting</h3>
         <div className="flex gap-4 items-end">
           <div className="flex-1">
-            <label className="block text-sm font-medium text-slate-700 mb-2">Preferred Time</label>
+            <label className="block text-sm font-medium text-slate-300 mb-2">Preferred Time</label>
             <input type="datetime-local" value={requestedTime}
               onChange={e => setRequestedTime(e.target.value)} required
-              className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              className="w-full px-4 py-2.5 border border-white/20 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
           </div>
-          <button type="submit"
+          <MagneticButton type="submit"
             className="px-6 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl text-sm font-medium hover:shadow-lg hover:shadow-blue-200 transition-all cursor-pointer">
             Request
-          </button>
+          </MagneticButton>
         </div>
       </form>
 
-      <h3 className="text-lg font-semibold text-slate-800 mb-4">Meeting History</h3>
+      <h3 className="text-lg font-semibold text-slate-200 mb-4">Meeting History</h3>
       {meetings.length === 0 ? (
-        <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 text-center">
+        <div className="glass-panel p-8 rounded-2xl shadow-sm border border-white/10 text-center">
           <p className="text-slate-400">No meetings scheduled yet for this team.</p>
         </div>
       ) : (
         <div className="space-y-3">
           {meetings.map(m => (
-            <div key={m._id} className="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex items-center justify-between">
+            <div key={m._id} className="glass-panel p-5 rounded-2xl shadow-sm border border-white/10 flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center text-white text-lg">
                   📅
                 </div>
                 <div>
-                  <p className="font-medium text-slate-800">Meeting with Mentor</p>
+                  <p className="font-medium text-slate-200">Meeting with Mentor</p>
                   <p className="text-xs text-slate-500">{new Date(m.requestedTime).toLocaleString()}</p>
                 </div>
               </div>
@@ -575,17 +576,17 @@ export default function StudentDashboard() {
   return (
     <DashboardLayout>
       {/* Team Selector Header Context Switcher */}
-      <div className="bg-white p-3 rounded-2xl shadow-sm border border-slate-100 mb-8 flex items-center justify-between">
+      <div className="glass-panel p-3 rounded-2xl shadow-sm border border-white/10 mb-8 flex items-center justify-between">
         <div className="flex gap-2">
           {teams.map((t, idx) => (
             <button key={t._id} onClick={() => { setActiveTeamId(t._id); setShowCreateJoin(false); }}
               className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all border
-                ${activeTeamId === t._id ? 'bg-blue-50 text-blue-700 border-blue-200 shadow-sm' : 'bg-transparent text-slate-500 border-transparent hover:bg-slate-50 hover:text-slate-700'}`}>
+                ${activeTeamId === t._id ? 'bg-blue-50 text-blue-700 border-blue-200 shadow-sm' : 'bg-transparent text-slate-500 border-transparent hover:bg-[#161b22]/50 hover:text-slate-300'}`}>
               <div className="flex items-center gap-2">
                 <span className={`w-2 h-2 rounded-full ${activeTeamId === t._id ? 'bg-blue-600' : 'bg-transparent'}`} />
                 {t.teamNo || t.name || `Team ${idx + 1}`}
               </div>
-            </button>
+              </button>
           ))}
         </div>
 
@@ -596,17 +597,17 @@ export default function StudentDashboard() {
           </button>
         )}
         {teams.length === 2 && (
-          <div className="px-4 py-2 text-xs font-semibold text-slate-400 bg-slate-50 rounded-lg">
+          <div className="px-4 py-2 text-xs font-semibold text-slate-400 bg-[#161b22]/50 rounded-lg">
             Max Teams Reached (2/2)
           </div>
         )}
       </div>
 
       {showCreateJoin && teams.length < 2 && (
-        <div className="mb-8 relative p-6 bg-slate-50 border border-slate-200 rounded-2xl">
+        <div className="mb-8 relative p-6 bg-[#161b22]/50 border border-white/20 rounded-2xl">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-bold text-slate-800">Add Second Team</h2>
-            <button onClick={() => setShowCreateJoin(false)} className="px-3 py-1 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-500 hover:text-slate-700">Cancel</button>
+            <h2 className="text-xl font-bold text-slate-200">Add Second Team</h2>
+            <button onClick={() => setShowCreateJoin(false)} className="px-3 py-1 glass-panel border border-white/20 rounded-lg text-sm font-medium text-slate-500 hover:text-slate-300">Cancel</button>
           </div>
           <CreateJoinTeam onTeamJoined={async (newTeam) => {
             await loadTeams();

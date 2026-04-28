@@ -3,6 +3,7 @@ import Select from 'react-select';
 import { useAuth } from '../context/AuthContext';
 import { getProfile, updateProfile } from '../utils/api';
 import DashboardLayout from '../components/DashboardLayout';
+import MagneticButton from '../components/MagneticButton';
 
 export const SKILL_OPTIONS = [
   { label: "Programming Languages", options: [{ value: "C++", label: "C++" }, { value: "Python", label: "Python" }, { value: "JavaScript", label: "JavaScript" }, { value: "TypeScript", label: "TypeScript" }, { value: "Java", label: "Java" }, { value: "C#", label: "C#" }, { value: "Go", label: "Go" }, { value: "Rust", label: "Rust" }] },
@@ -159,11 +160,21 @@ export default function Profile() {
     return result;
   };
 
+  const selectStyles = {
+    control: (base) => ({ ...base, backgroundColor: 'rgba(22, 27, 34, 0.5)', borderColor: 'rgba(255, 255, 255, 0.2)', color: '#e2e8f0' }),
+    menu: (base) => ({ ...base, backgroundColor: '#161b22' }),
+    option: (base, state) => ({ ...base, backgroundColor: state.isFocused ? 'rgba(59, 130, 246, 0.5)' : '#161b22', color: '#e2e8f0' }),
+    singleValue: (base) => ({ ...base, color: '#e2e8f0' }),
+    multiValue: (base) => ({ ...base, backgroundColor: 'rgba(59, 130, 246, 0.2)' }),
+    multiValueLabel: (base) => ({ ...base, color: '#e2e8f0' }),
+    input: (base) => ({ ...base, color: '#e2e8f0' }),
+  };
+
   return (
     <DashboardLayout>
       <div className="max-w-4xl mx-auto">
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-slate-800">My Profile</h1>
+          <h1 className="text-3xl font-bold text-slate-200">My Profile</h1>
           <p className="text-slate-500 mt-1">Manage your personal information and {user?.role === 'Mentor' ? 'expertise' : 'skills'}.</p>
         </div>
 
@@ -187,68 +198,68 @@ export default function Profile() {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+        <form onSubmit={handleSubmit} className="glass-panel rounded-2xl shadow-sm border border-white/10 overflow-hidden">
           
           {/* Shared Information */}
-          <div className="p-6 border-b border-slate-100">
-            <h2 className="text-lg font-semibold text-slate-800 mb-4">Basic Details</h2>
+          <div className="p-6 border-b border-white/10">
+            <h2 className="text-lg font-semibold text-slate-200 mb-4">Basic Details</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Name</label>
+                <label className="block text-sm font-medium text-slate-300 mb-1">Name</label>
                 <input type="text" value={user?.name || ''} disabled 
-                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-500 cursor-not-allowed" />
+                  className="w-full px-4 py-2.5 bg-[#161b22]/50 border border-white/20 rounded-xl text-sm text-slate-500 cursor-not-allowed" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                <label className="block text-sm font-medium text-slate-300 mb-1">Email</label>
                 <input type="text" value={user?.email || ''} disabled 
-                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-500 cursor-not-allowed" />
+                  className="w-full px-4 py-2.5 bg-[#161b22]/50 border border-white/20 rounded-xl text-sm text-slate-500 cursor-not-allowed" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">GitHub Profile</label>
+                <label className="block text-sm font-medium text-slate-300 mb-1">GitHub Profile</label>
                 <input type="url" name="github" value={formData.github} onChange={handleChange} placeholder="https://github.com/..."
-                  className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                  className="w-full px-4 py-2.5 glass-panel border border-white/20 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-200" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">LinkedIn Profile</label>
+                <label className="block text-sm font-medium text-slate-300 mb-1">LinkedIn Profile</label>
                 <input type="url" name="linkedin" value={formData.linkedin} onChange={handleChange} placeholder="https://linkedin.com/in/..."
-                  className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                  className="w-full px-4 py-2.5 glass-panel border border-white/20 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-200" />
               </div>
             </div>
           </div>
 
           {/* Student Specific Information */}
           {user?.role === 'Student' && (
-            <div className="p-6 border-b border-slate-100 bg-slate-50/50">
-              <h2 className="text-lg font-semibold text-slate-800 mb-4">Academic Details</h2>
+            <div className="p-6 border-b border-white/10 bg-[#161b22]/50/50">
+              <h2 className="text-lg font-semibold text-slate-200 mb-4">Academic Details</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">University Roll No *</label>
+                  <label className="block text-sm font-medium text-slate-300 mb-1">University Roll No *</label>
                   <input type="text" name="universityRollNo" value={formData.universityRollNo} onChange={handleChange} required
-                    className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    className="w-full px-4 py-2.5 glass-panel border border-white/20 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-200" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Student ID</label>
+                  <label className="block text-sm font-medium text-slate-300 mb-1">Student ID</label>
                   <input type="text" name="studentId" value={formData.studentId} onChange={handleChange} 
-                    className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    className="w-full px-4 py-2.5 glass-panel border border-white/20 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-200" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Semester *</label>
+                  <label className="block text-sm font-medium text-slate-300 mb-1">Semester *</label>
                   <input type="number" name="semester" min="1" max="10" value={formData.semester} onChange={handleChange} required
-                    className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    className="w-full px-4 py-2.5 glass-panel border border-white/20 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-200" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Section</label>
+                  <label className="block text-sm font-medium text-slate-300 mb-1">Section</label>
                   <input type="text" name="section" value={formData.section} onChange={handleChange} 
-                    className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    className="w-full px-4 py-2.5 glass-panel border border-white/20 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-200" />
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Specialization</label>
+                  <label className="block text-sm font-medium text-slate-300 mb-1">Specialization</label>
                   <input type="text" name="specialization" value={formData.specialization} onChange={handleChange} placeholder="e.g. Artificial Intelligence, Web Dev..."
-                    className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    className="w-full px-4 py-2.5 glass-panel border border-white/20 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-200" />
                 </div>
               </div>
 
-              <h2 className="text-lg font-semibold text-slate-800 mb-4 mt-6">Technical Skills *</h2>
+              <h2 className="text-lg font-semibold text-slate-200 mb-4 mt-6">Technical Skills *</h2>
               <div className="mb-2">
                 <Select
                   isMulti
@@ -256,6 +267,7 @@ export default function Profile() {
                   value={getMappedOptions(formData.skills)}
                   onChange={handleSkillsChange}
                   className="text-sm"
+                  styles={selectStyles}
                   placeholder="Select your skills..."
                   theme={(theme) => ({
                     ...theme,
@@ -271,34 +283,34 @@ export default function Profile() {
 
           {/* Mentor Specific Information */}
           {user?.role === 'Mentor' && (
-            <div className="p-6 border-b border-slate-100 bg-slate-50/50">
-              <h2 className="text-lg font-semibold text-slate-800 mb-4">Professional Details</h2>
+            <div className="p-6 border-b border-white/10 bg-[#161b22]/50/50">
+              <h2 className="text-lg font-semibold text-slate-200 mb-4">Professional Details</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Employee ID</label>
+                  <label className="block text-sm font-medium text-slate-300 mb-1">Employee ID</label>
                   <input type="text" name="employeeId" value={formData.employeeId} onChange={handleChange} 
-                    className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    className="w-full px-4 py-2.5 glass-panel border border-white/20 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-200" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Department</label>
+                  <label className="block text-sm font-medium text-slate-300 mb-1">Department</label>
                   <input type="text" name="department" value={formData.department} onChange={handleChange} 
-                    className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    className="w-full px-4 py-2.5 glass-panel border border-white/20 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-200" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Experience (Years) *</label>
+                  <label className="block text-sm font-medium text-slate-300 mb-1">Experience (Years) *</label>
                   <input type="number" name="experienceYears" min="0" value={formData.experienceYears} onChange={handleChange} required
-                    className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                    className="w-full px-4 py-2.5 glass-panel border border-white/20 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-200" />
                 </div>
                 <div className="flex items-center mt-7">
                   <label className="relative inline-flex items-center cursor-pointer">
-                    <input type="checkbox" name="availability" checked={formData.availability} onChange={handleChange} className="sr-only peer" />
-                    <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
-                    <span className="ml-3 text-sm font-medium text-slate-700">Available for mentoring</span>
+                    <input type="checkbox" name="availability" checked={formData.availability} onChange={handleChange} className="bg-[#161b22]/50 sr-only peer text-slate-200" />
+                    <div className="w-11 h-6 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:glass-panel after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-500"></div>
+                    <span className="ml-3 text-sm font-medium text-slate-300">Available for mentoring</span>
                   </label>
                 </div>
               </div>
 
-              <h2 className="text-lg font-semibold text-slate-800 mb-4 mt-6">Areas of Expertise *</h2>
+              <h2 className="text-lg font-semibold text-slate-200 mb-4 mt-6">Areas of Expertise *</h2>
               <div className="mb-2">
                 <Select
                   isMulti
@@ -306,6 +318,7 @@ export default function Profile() {
                   value={getMappedOptions(formData.expertise)}
                   onChange={handleExpertiseChange}
                   className="text-sm"
+                  styles={selectStyles}
                   placeholder="Select your areas of expertise..."
                   required={formData.expertise.length === 0}
                   theme={(theme) => ({
@@ -322,14 +335,14 @@ export default function Profile() {
             </div>
           )}
 
-          <div className="p-6 bg-slate-50 flex justify-end">
-            <button 
+          <div className="p-6 bg-[#161b22]/50 flex justify-end">
+            <MagneticButton 
               type="submit" 
               disabled={submitting || (user?.role === 'Mentor' && formData.expertise.length === 0)}
               className="px-6 py-2.5 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 transition-colors cursor-pointer disabled:opacity-50"
             >
               {submitting ? 'Saving...' : 'Save Profile'}
-            </button>
+            </MagneticButton>
           </div>
         </form>
       </div>

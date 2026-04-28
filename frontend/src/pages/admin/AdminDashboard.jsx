@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import DashboardLayout from '../../components/DashboardLayout';
 import StatCard from '../../components/StatCard';
+import MagneticButton from '../../components/MagneticButton';
 import ProgressBar from '../../components/ProgressBar';
 import { useAuth } from '../../context/AuthContext';
 import { getActivePhase, setActivePhase, getTeams, getUsers, createTeam, getSubjects, createSubject, deleteTeam } from '../../utils/api';
@@ -31,7 +32,7 @@ function AdminOverview() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-800">Welcome back, {user?.name} 👋</h1>
+        <h1 className="text-3xl font-bold text-slate-200">Welcome back, {user?.name} 👋</h1>
         <p className="text-slate-500 mt-1">Here's an overview of the PBL system.</p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
@@ -42,8 +43,8 @@ function AdminOverview() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-          <h3 className="text-lg font-semibold text-slate-800 mb-4">Team Progress</h3>
+        <div className="glass-panel p-6 rounded-2xl shadow-sm border border-white/10">
+          <h3 className="text-lg font-semibold text-slate-200 mb-4">Team Progress</h3>
           {teams.length === 0 ? (
             <p className="text-slate-400 text-sm">No teams yet.</p>
           ) : (
@@ -53,11 +54,11 @@ function AdminOverview() {
                   <div className="flex justify-between items-center text-sm mb-1">
                     <div className="flex items-center gap-2">
                       <span className="px-2 py-0.5 bg-blue-100 text-blue-700 rounded-md font-mono text-xs font-bold">{t.teamNo || 'NO_ID'}</span>
-                      <span className="font-medium text-slate-700">{t.name}</span>
+                      <span className="font-medium text-slate-300">{t.name}</span>
                     </div>
                     <span className="text-slate-500">{t.progress || 0}%</span>
                   </div>
-                  <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+                  <div className="w-full bg-white/5 rounded-full h-2.5 overflow-hidden">
                     <div className="h-full rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 transition-all duration-500"
                       style={{ width: `${Math.min(t.progress || 0, 100)}%` }} />
                   </div>
@@ -67,17 +68,17 @@ function AdminOverview() {
           )}
         </div>
 
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-          <h3 className="text-lg font-semibold text-slate-800 mb-4">User Breakdown</h3>
+        <div className="glass-panel p-6 rounded-2xl shadow-sm border border-white/10">
+          <h3 className="text-lg font-semibold text-slate-200 mb-4">User Breakdown</h3>
           {['Admin', 'Mentor', 'Student'].map(role => {
             const count = users.filter(u => u.role === role).length;
             return (
               <div key={role} className="flex items-center justify-between py-3 border-b border-slate-50 last:border-0">
                 <div className="flex items-center gap-3">
                   <span className={`w-3 h-3 rounded-full ${role === 'Admin' ? 'bg-purple-500' : role === 'Mentor' ? 'bg-blue-500' : 'bg-emerald-500'}`} />
-                  <span className="text-sm font-medium text-slate-700">{role}s</span>
+                  <span className="text-sm font-medium text-slate-300">{role}s</span>
                 </div>
-                <span className="text-sm font-bold text-slate-800">{count}</span>
+                <span className="text-sm font-bold text-slate-200">{count}</span>
               </div>
             );
           })}
@@ -117,7 +118,7 @@ function PhaseControl() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-slate-800 mb-2">Phase Control</h1>
+      <h1 className="text-3xl font-bold text-slate-200 mb-2">Phase Control</h1>
       <p className="text-slate-500 mb-8">Manage the global active phase. Only one phase can be active at a time.</p>
 
       {msg && (
@@ -129,7 +130,7 @@ function PhaseControl() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {[1, 2, 3].map(p => (
           <div key={p} className={`relative rounded-2xl p-6 border-2 transition-all duration-300 cursor-pointer
-            ${phase === p ? 'border-blue-500 bg-blue-50/50 shadow-lg shadow-blue-100' : 'border-slate-200 bg-white hover:border-slate-300'}`}
+            ${phase === p ? 'border-blue-500 bg-blue-50/50 shadow-lg shadow-blue-100' : 'border-white/20 glass-panel hover:border-slate-300'}`}
             onClick={() => handleChange(p)}>
             {phase === p && (
               <div className="absolute top-3 right-3 w-7 h-7 rounded-full bg-blue-500 flex items-center justify-center">
@@ -139,10 +140,10 @@ function PhaseControl() {
             <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${phaseInfo[p].color} flex items-center justify-center text-white text-lg font-bold mb-4 shadow-lg`}>
               {p}
             </div>
-            <h3 className="text-lg font-semibold text-slate-800">Phase {p}: {phaseInfo[p].name}</h3>
+            <h3 className="text-lg font-semibold text-slate-200">Phase {p}: {phaseInfo[p].name}</h3>
             <p className="text-sm text-slate-500 mt-2">{phaseInfo[p].desc}</p>
             <div className={`mt-4 inline-block px-3 py-1 rounded-full text-xs font-medium
-              ${phase === p ? 'bg-blue-100 text-blue-700' : 'bg-slate-100 text-slate-500'}`}>
+              ${phase === p ? 'bg-blue-100 text-blue-700' : 'bg-white/5 text-slate-500'}`}>
               {phase === p ? '● Active' : 'Inactive'}
             </div>
           </div>
@@ -197,7 +198,7 @@ function TeamsView() {
     <div>
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-slate-800">Teams</h1>
+          <h1 className="text-3xl font-bold text-slate-200">Teams</h1>
           <p className="text-slate-500 mt-1">Manage project teams and assignments.</p>
         </div>
         <button onClick={() => setShowForm(!showForm)}
@@ -207,27 +208,27 @@ function TeamsView() {
       </div>
 
       {showForm && (
-        <form onSubmit={handleCreate} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 mb-8 space-y-4">
+        <form onSubmit={handleCreate} className="glass-panel p-6 rounded-2xl shadow-sm border border-white/10 mb-8 space-y-4">
           <input value={name} onChange={e => setName(e.target.value)} placeholder="Team Name"
-            className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            className="w-full px-4 py-2.5 bg-[#161b22]/50 text-slate-200 border border-white/20 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
           <select value={mentorId} onChange={e => setMentorId(e.target.value)}
-            className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            className="w-full px-4 py-2.5 bg-[#161b22]/50 text-slate-200 border border-white/20 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
             <option value="">Select Mentor</option>
             {mentors.map(m => <option key={m._id} value={m._id}>{m.name}</option>)}
           </select>
           <select multiple value={memberIds} onChange={e => setMemberIds([...e.target.selectedOptions].map(o => o.value))}
-            className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 h-28">
+            className="w-full px-4 py-2.5 bg-[#161b22]/50 text-slate-200 border border-white/20 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 h-28">
             {students.map(s => <option key={s._id} value={s._id}>{s.name}</option>)}
           </select>
-          <button type="submit" className="px-6 py-2.5 bg-blue-600 text-white rounded-xl text-sm font-medium hover:bg-blue-700 cursor-pointer">
+          <MagneticButton type="submit" className="px-6 py-2.5 bg-blue-600 text-white rounded-xl text-sm font-medium hover:bg-blue-700 cursor-pointer">
             Create Team
-          </button>
+          </MagneticButton>
         </form>
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {teams.map(t => (
-          <div key={t._id} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-all duration-300">
+          <div key={t._id} className="glass-panel p-6 rounded-2xl shadow-sm border border-white/10 hover:shadow-md transition-all duration-300">
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white font-bold text-sm">
@@ -235,7 +236,7 @@ function TeamsView() {
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                     <h3 className="font-semibold text-slate-800">{t.name}</h3>
+                     <h3 className="font-semibold text-slate-200">{t.name}</h3>
                      <span className="px-2 py-0.5 bg-indigo-50 text-indigo-600 rounded text-[10px] font-mono font-bold border border-indigo-100">{t.teamNo || 'NO_ID'}</span>
                   </div>
                   <p className="text-xs text-slate-500">{t.members?.length || 0} members</p>
@@ -249,7 +250,7 @@ function TeamsView() {
             </div>
             <div className="mb-3">
               <p className="text-xs text-slate-500 mb-1">Mentor</p>
-              <p className="text-sm font-medium text-slate-700">{t.mentor?.name || 'Unassigned'}</p>
+              <p className="text-sm font-medium text-slate-300">{t.mentor?.name || 'Unassigned'}</p>
             </div>
             <ProgressBar progress={t.progress || 0} />
           </div>
@@ -274,12 +275,12 @@ function UsersView() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-slate-800 mb-2">Users</h1>
+      <h1 className="text-3xl font-bold text-slate-200 mb-2">Users</h1>
       <p className="text-slate-500 mb-8">All registered users in the system.</p>
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+      <div className="glass-panel rounded-2xl shadow-sm border border-white/10 overflow-hidden">
         <table className="w-full">
           <thead>
-            <tr className="bg-slate-50 border-b border-slate-100">
+            <tr className="bg-[#161b22]/50 border-b border-white/10">
               <th className="text-left px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Name</th>
               <th className="text-left px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Email</th>
               <th className="text-left px-6 py-4 text-xs font-semibold text-slate-500 uppercase tracking-wider">Role</th>
@@ -288,20 +289,20 @@ function UsersView() {
           </thead>
           <tbody>
             {users.map(u => (
-              <tr key={u._id} className="border-b border-slate-50 hover:bg-slate-50/50 transition-colors">
+              <tr key={u._id} className="border-b border-slate-50 hover:bg-[#161b22]/50/50 transition-colors">
                 <td className="px-6 py-4">
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-gradient-to-br from-slate-400 to-slate-500 flex items-center justify-center text-white text-xs font-bold">
                       {u.name?.[0]}
                     </div>
-                    <span className="text-sm font-medium text-slate-800">{u.name}</span>
+                    <span className="text-sm font-medium text-slate-200">{u.name}</span>
                   </div>
                 </td>
-                <td className="px-6 py-4 text-sm text-slate-600">{u.email}</td>
+                <td className="px-6 py-4 text-sm text-slate-300">{u.email}</td>
                 <td className="px-6 py-4">
                   <span className={`px-3 py-1 rounded-full text-xs font-medium ${roleColors[u.role]}`}>{u.role}</span>
                 </td>
-                <td className="px-6 py-4 text-sm text-slate-600">
+                <td className="px-6 py-4 text-sm text-slate-300">
                   {u.teamId?.teamNo ? (
                      <span className="font-mono text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded">{u.teamId.teamNo}</span>
                   ) : (
@@ -341,7 +342,7 @@ function SubjectsView() {
     <div>
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-slate-800">Subjects</h1>
+          <h1 className="text-3xl font-bold text-slate-200">Subjects</h1>
           <p className="text-slate-500 mt-1">Manage project-based learning subjects and codes.</p>
         </div>
         <button onClick={() => setShowForm(!showForm)}
@@ -351,33 +352,33 @@ function SubjectsView() {
       </div>
 
       {showForm && (
-        <form onSubmit={handleCreate} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 mb-8 flex gap-4 items-end">
+        <form onSubmit={handleCreate} className="glass-panel p-6 rounded-2xl shadow-sm border border-white/10 mb-8 flex gap-4 items-end">
           <div className="flex-1">
              <label className="block text-xs font-semibold text-slate-500 mb-1">Subject Name</label>
-             <input value={form.name} onChange={e => setForm({...form, name: e.target.value})} placeholder="e.g. Full Stack Development" required className="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm" />
+             <input value={form.name} onChange={e => setForm({...form, name: e.target.value})} placeholder="e.g. Full Stack Development" required className="w-full px-4 py-2 bg-[#161b22]/50 text-slate-200 border border-white/20 rounded-xl text-sm" />
           </div>
           <div className="flex-1">
              <label className="block text-xs font-semibold text-slate-500 mb-1">Subject Code</label>
-             <input value={form.code} onChange={e => setForm({...form, code: e.target.value})} placeholder="e.g. FULLSTACK" required className="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm uppercase" />
+             <input value={form.code} onChange={e => setForm({...form, code: e.target.value})} placeholder="e.g. FULLSTACK" required className="w-full px-4 py-2 bg-[#161b22]/50 text-slate-200 border border-white/20 rounded-xl text-sm uppercase" />
           </div>
           <div className="w-24">
              <label className="block text-xs font-semibold text-slate-500 mb-1">Semester</label>
-             <input type="number" min="1" max="10" value={form.semester} onChange={e => setForm({...form, semester: e.target.value})} placeholder="e.g. 6" required className="w-full px-4 py-2 border border-slate-200 rounded-xl text-sm" />
+             <input type="number" min="1" max="10" value={form.semester} onChange={e => setForm({...form, semester: e.target.value})} placeholder="e.g. 6" required className="w-full px-4 py-2 bg-[#161b22]/50 text-slate-200 border border-white/20 rounded-xl text-sm" />
           </div>
-          <button type="submit" className="px-6 py-2 bg-emerald-600 text-white rounded-xl text-sm font-medium hover:bg-emerald-700 cursor-pointer h-10">
+          <MagneticButton type="submit" className="px-6 py-2 bg-emerald-600 text-white rounded-xl text-sm font-medium hover:bg-emerald-700 cursor-pointer h-10">
             Save
-          </button>
+          </MagneticButton>
         </form>
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {subjects.map(s => (
-          <div key={s._id} className="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-all">
+          <div key={s._id} className="glass-panel p-5 rounded-2xl shadow-sm border border-white/10 hover:shadow-md transition-all">
              <div className="flex justify-between items-start mb-2">
-                <span className="px-3 py-1 bg-slate-100 text-slate-700 rounded-md font-mono text-xs font-bold tracking-wider">{s.code}_{s.semester}</span>
+                <span className="px-3 py-1 bg-white/5 text-slate-300 rounded-md font-mono text-xs font-bold tracking-wider">{s.code}_{s.semester}</span>
                 <span className="text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">Sem {s.semester}</span>
              </div>
-             <h3 className="font-semibold text-slate-800 text-lg mt-3">{s.name}</h3>
+             <h3 className="font-semibold text-slate-200 text-lg mt-3">{s.name}</h3>
           </div>
         ))}
       </div>

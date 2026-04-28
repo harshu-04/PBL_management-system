@@ -12,7 +12,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Import routes (will be created soon)
+
 const authRoutes = require('./routes/authRoutes');
 const phaseRoutes = require('./routes/phaseRoutes');
 const submissionRoutes = require('./routes/submissionRoutes');

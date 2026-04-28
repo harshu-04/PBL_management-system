@@ -30,7 +30,7 @@ function MentorOverview() {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-800">Welcome back, {user?.name} 👋</h1>
+        <h1 className="text-3xl font-bold text-slate-200">Welcome back, {user?.name} 👋</h1>
         <p className="text-slate-500 mt-1">Review submissions and manage your teams.</p>
       </div>
 
@@ -41,21 +41,21 @@ function MentorOverview() {
         <StatCard icon="📝" label="To Review" value="—" color="cyan" />
       </div>
 
-      <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-        <h3 className="text-lg font-semibold text-slate-800 mb-4">My Teams</h3>
+      <div className="glass-panel p-6 rounded-2xl shadow-sm border border-white/10">
+        <h3 className="text-lg font-semibold text-slate-200 mb-4">My Teams</h3>
         {teams.length === 0 ? (
           <p className="text-slate-400 text-sm">No teams assigned.</p>
         ) : (
           <div className="space-y-4">
             {teams.map(t => (
-              <div key={t._id} className="flex items-center justify-between p-4 bg-slate-50 rounded-xl">
+              <div key={t._id} className="flex items-center justify-between p-4 bg-[#161b22]/50 rounded-xl">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white font-bold text-sm">
                     {t.name?.[0]}
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <p className="font-medium text-slate-800">{t.name}</p>
+                      <p className="font-medium text-slate-200">{t.name}</p>
                       <span className="px-2 py-0.5 bg-blue-100 text-blue-700 rounded-md font-mono text-[10px] font-bold">{t.teamNo || 'NO_ID'}</span>
                     </div>
                     <p className="text-xs text-slate-500">{t.members?.length || 0} members</p>
@@ -63,7 +63,7 @@ function MentorOverview() {
                 </div>
                 <div className="w-40">
                   <div className="flex justify-end text-xs text-slate-500 mb-1">{t.progress || 0}%</div>
-                  <div className="w-full bg-slate-200 rounded-full h-2">
+                  <div className="w-full bg-white/10 rounded-full h-2">
                     <div className="h-full rounded-full bg-gradient-to-r from-blue-500 to-cyan-400 transition-all" style={{ width: `${Math.min(t.progress || 0, 100)}%` }} />
                   </div>
                 </div>
@@ -85,18 +85,18 @@ function MentorTeams() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-slate-800 mb-2">My Teams</h1>
+      <h1 className="text-3xl font-bold text-slate-200 mb-2">My Teams</h1>
       <p className="text-slate-500 mb-8">Teams assigned to you for mentoring.</p>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {teams.map(t => (
-          <div key={t._id} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+          <div key={t._id} className="glass-panel p-6 rounded-2xl shadow-sm border border-white/10">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white font-bold">
                 {t.name?.[0]}
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className="text-lg font-semibold text-slate-800">{t.name}</h3>
+                  <h3 className="text-lg font-semibold text-slate-200">{t.name}</h3>
                   <span className="px-2 py-0.5 bg-indigo-50 text-indigo-600 rounded text-[10px] font-mono font-bold border border-indigo-100">{t.teamNo || 'NO_ID'}</span>
                 </div>
                 <p className="text-sm text-slate-500">{t.members?.length || 0} members</p>
@@ -106,8 +106,8 @@ function MentorTeams() {
               <h4 className="text-xs font-semibold text-slate-500 uppercase mb-2">Members</h4>
               <div className="space-y-2">
                 {t.members?.map(m => (
-                  <div key={m._id} className="flex items-center gap-2 text-sm text-slate-700">
-                    <div className="w-6 h-6 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold text-slate-600">{m.name?.[0]}</div>
+                  <div key={m._id} className="flex items-center gap-2 text-sm text-slate-300">
+                    <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-xs font-bold text-slate-300">{m.name?.[0]}</div>
                     {m.name}
                   </div>
                 ))}
@@ -195,7 +195,7 @@ function MentorSubmissions() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-slate-800 mb-2">Submissions & Grading</h1>
+      <h1 className="text-3xl font-bold text-slate-200 mb-2">Submissions & Grading</h1>
       <p className="text-slate-500 mb-6">Review submissions and evaluate individual student performance. Active: <span className="font-semibold text-blue-600">Phase {phase} ({phaseNames[phase]})</span></p>
 
       {msg && (
@@ -208,7 +208,7 @@ function MentorSubmissions() {
         {teams.map(t => (
           <button key={t._id} onClick={() => loadSubmissions(t)}
             className={`px-4 py-2 rounded-xl text-sm font-medium transition-all cursor-pointer
-              ${selectedTeam?._id === t._id ? 'bg-blue-600 text-white shadow-lg shadow-blue-200' : 'bg-white text-slate-700 border border-slate-200 hover:border-blue-300'}`}>
+              ${selectedTeam?._id === t._id ? 'bg-blue-600 text-white shadow-lg shadow-blue-200' : 'glass-panel text-slate-300 border border-white/20 hover:border-blue-300'}`}>
             {t.teamNo || t.name}
           </button>
         ))}
@@ -222,14 +222,14 @@ function MentorSubmissions() {
           </div>
           <div className="space-y-6">
              {report.report.map(r => (
-               <div key={r.student._id} className="bg-white/10 p-5 rounded-xl border border-white/5">
+               <div key={r.student._id} className="glass-panel/10 p-5 rounded-xl border border-white/5">
                  <div className="flex justify-between items-center mb-3">
                    <h3 className="font-bold text-lg">{r.student.name}</h3>
                    <span className="text-xl font-black text-emerald-400">{r.totalMarks} / 30</span>
                  </div>
                  <div className="space-y-2">
                    {r.remarks.map((rmk, i) => (
-                     <div key={i} className="text-sm bg-white/5 p-3 rounded-lg border-l-2 border-indigo-400">
+                     <div key={i} className="text-sm glass-panel/5 p-3 rounded-lg border-l-2 border-indigo-400">
                        {rmk}
                      </div>
                    ))}
@@ -237,19 +237,19 @@ function MentorSubmissions() {
                </div>
              ))}
           </div>
-          <button onClick={() => setReport(null)} className="mt-6 px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg text-sm font-medium transition-colors">Close Report</button>
+          <button onClick={() => setReport(null)} className="mt-6 px-4 py-2 glass-panel/20 hover:glass-panel/30 rounded-lg text-sm font-medium transition-colors">Close Report</button>
         </div>
       )}
 
       {selectedTeam && !report && (
         <div className="space-y-4">
           {submissions.length === 0 ? (
-            <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 text-center">
+            <div className="glass-panel p-8 rounded-2xl shadow-sm border border-white/10 text-center">
               <p className="text-slate-400">No submissions yet for this team.</p>
             </div>
           ) : (
             submissions.map(sub => (
-              <div key={sub._id} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+              <div key={sub._id} className="glass-panel p-6 rounded-2xl shadow-sm border border-white/10">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
                     <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-sm
@@ -257,7 +257,7 @@ function MentorSubmissions() {
                       P{sub.phaseNumber}
                     </div>
                     <div>
-                      <h3 className="font-semibold text-slate-800">Phase {sub.phaseNumber}: {phaseNames[sub.phaseNumber]}</h3>
+                      <h3 className="font-semibold text-slate-200">Phase {sub.phaseNumber}: {phaseNames[sub.phaseNumber]}</h3>
                       <p className="text-xs text-slate-500">{new Date(sub.submittedAt || sub.createdAt).toLocaleDateString()}</p>
                     </div>
                   </div>
@@ -267,7 +267,7 @@ function MentorSubmissions() {
                   </span>
                 </div>
 
-                <div className="bg-slate-50 p-4 rounded-xl mb-6">
+                <div className="bg-[#161b22]/50 p-4 rounded-xl mb-6">
                   <p className="text-xs font-semibold text-slate-500 uppercase mb-3">Submission Details</p>
                   <div className="grid grid-cols-2 gap-4">
                      <div>
@@ -287,38 +287,38 @@ function MentorSubmissions() {
 
                 {sub.grade !== undefined && sub.grade !== null ? (
                   <div>
-                    <h4 className="text-sm font-semibold text-slate-800 mb-3">Student Evaluations</h4>
+                    <h4 className="text-sm font-semibold text-slate-200 mb-3">Student Evaluations</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {sub.performance?.map((perf, idx) => (
                         <div key={idx} className={`p-4 rounded-xl border ${sub.grade === 1 ? 'bg-green-50/50 border-green-100' : 'bg-red-50/50 border-red-100'}`}>
-                           <p className="font-medium text-slate-800 mb-1">{perf.studentId?.name || 'Student'}</p>
+                           <p className="font-medium text-slate-200 mb-1">{perf.studentId?.name || 'Student'}</p>
                            <p className="text-xs text-slate-500 mb-2">{perf.studentId?.email}</p>
                            <div className="flex items-center gap-2 mb-2">
-                              <span className="text-xs font-bold px-2 py-1 bg-white rounded shadow-sm border border-slate-100">{perf.marks}/10 Marks</span>
+                              <span className="text-xs font-bold px-2 py-1 glass-panel rounded shadow-sm border border-white/10">{perf.marks}/10 Marks</span>
                            </div>
-                           <p className="text-sm text-slate-700 italic">"{perf.remark}"</p>
+                           <p className="text-sm text-slate-300 italic">"{perf.remark}"</p>
                         </div>
                       ))}
                     </div>
                   </div>
                 ) : sub.phaseNumber === phase ? (
                   <div>
-                    <h4 className="text-sm font-semibold text-slate-800 mb-3">Evaluate Students (0-10 Marks)</h4>
+                    <h4 className="text-sm font-semibold text-slate-200 mb-3">Evaluate Students (0-10 Marks)</h4>
                     <div className="space-y-3 mb-6">
                       {selectedTeam.members?.map(m => (
-                        <div key={m._id} className="flex gap-3 bg-white p-3 border border-slate-200 rounded-xl items-center">
+                        <div key={m._id} className="flex gap-3 glass-panel p-3 border border-white/20 rounded-xl items-center">
                            <div className="w-1/4">
-                             <p className="font-medium text-sm text-slate-800 truncate">{m.name}</p>
+                             <p className="font-medium text-sm text-slate-200 truncate">{m.name}</p>
                              <p className="text-xs text-slate-500 truncate">{m.email}</p>
                            </div>
                            <input type="number" min="0" max="10" placeholder="Marks"
                               value={grading[sub._id]?.[m._id]?.marks || ''}
                               onChange={e => setGrading(prev => ({ ...prev, [sub._id]: { ...prev[sub._id], [m._id]: { ...prev[sub._id]?.[m._id], marks: e.target.value } } }))}
-                              className="w-20 px-3 py-2 border border-slate-200 rounded-lg text-sm text-center" />
+                              className="w-20 px-3 py-2 bg-[#161b22]/50 text-slate-200 border border-white/20 rounded-lg text-sm text-center" />
                            <input type="text" placeholder="Remark for this student..."
                               value={grading[sub._id]?.[m._id]?.remark || ''}
                               onChange={e => setGrading(prev => ({ ...prev, [sub._id]: { ...prev[sub._id], [m._id]: { ...prev[sub._id]?.[m._id], remark: e.target.value } } }))}
-                              className="flex-1 px-3 py-2 border border-slate-200 rounded-lg text-sm" />
+                              className="flex-1 px-3 py-2 bg-[#161b22]/50 text-slate-200 border border-white/20 rounded-lg text-sm" />
                         </div>
                       ))}
                     </div>
@@ -339,7 +339,7 @@ function MentorSubmissions() {
                 
                 {/* Phase 3 Report Generation Trigger */}
                 {phase === 3 && sub.phaseNumber === 3 && sub.grade !== undefined && sub.grade !== null && (
-                   <div className="mt-6 pt-6 border-t border-slate-100 flex justify-center gap-3">
+                   <div className="mt-6 pt-6 border-t border-white/10 flex justify-center gap-3">
                      <button onClick={generateReport} className="px-6 py-2.5 bg-indigo-600 text-white rounded-xl font-bold text-sm hover:bg-indigo-700 shadow-md transition-all cursor-pointer">
                         📈 View Final Report
                      </button>
@@ -380,25 +380,25 @@ function MentorMeetings() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-slate-800 mb-2">Meeting Requests</h1>
+      <h1 className="text-3xl font-bold text-slate-200 mb-2">Meeting Requests</h1>
       <p className="text-slate-500 mb-8">Manage meeting requests from your teams.</p>
 
       {meetings.length === 0 ? (
-        <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 text-center">
+        <div className="glass-panel p-8 rounded-2xl shadow-sm border border-white/10 text-center">
           <p className="text-slate-400">No meeting requests yet.</p>
         </div>
       ) : (
         <div className="space-y-4">
           {meetings.map(m => (
-            <div key={m._id} className="bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex items-center justify-between">
+            <div key={m._id} className="glass-panel p-5 rounded-2xl shadow-sm border border-white/10 flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center text-white text-lg">
                   📅
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <p className="font-medium text-slate-800">{m.teamId?.name || 'Team'}</p>
-                    <span className="px-2 py-0.5 bg-slate-100 text-slate-600 rounded font-mono text-[10px] font-bold">{m.teamId?.teamNo || 'NO_ID'}</span>
+                    <p className="font-medium text-slate-200">{m.teamId?.name || 'Team'}</p>
+                    <span className="px-2 py-0.5 bg-white/5 text-slate-300 rounded font-mono text-[10px] font-bold">{m.teamId?.teamNo || 'NO_ID'}</span>
                   </div>
                   <p className="text-xs text-slate-500">{new Date(m.requestedTime).toLocaleString()}</p>
                 </div>

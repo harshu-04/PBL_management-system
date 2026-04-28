@@ -6,7 +6,7 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import MentorDashboard from './pages/mentor/MentorDashboard';
 import StudentDashboard from './pages/student/StudentDashboard';
 import Profile from './pages/Profile';
-
+import DynamicBackground from './components/DynamicBackground';
 // ──────────────────────────────────────────────
 // Protected Route — Redirects to /login if unauthenticated
 // Checks role against allowedRoles for RBAC
@@ -55,7 +55,7 @@ const GuestRoute = ({ children }) => {
   const { user, loading } = useAuth();
   if (loading) return null;
   if (user) return <Navigate to="/" replace />;
-  return children;
+  return <DynamicBackground>{children}</DynamicBackground>;
 };
 
 function App() {

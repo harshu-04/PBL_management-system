@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-// ──────────────────────────────────────────────
+
 // Auth Middleware — Verify JWT from Authorization header
-// ──────────────────────────────────────────────
+
 const protect = async (req, res, next) => {
   // Check for Bearer token in Authorization header
   const authHeader = req.headers.authorization;

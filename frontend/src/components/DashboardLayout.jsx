@@ -1,12 +1,15 @@
 import Sidebar from './Sidebar';
+import DynamicBackground from './DynamicBackground';
 
 export default function DashboardLayout({ children }) {
   return (
-    <div className="min-h-screen bg-slate-50">
-      <Sidebar />
-      <main className="ml-64 p-8">
-        {children}
-      </main>
-    </div>
+    <DynamicBackground>
+      <div className="min-h-screen">
+        <Sidebar />
+        <main className="ml-64 p-8">
+          {children}
+        </main>
+      </div>
+    </DynamicBackground>
   );
 }

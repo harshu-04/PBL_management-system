@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
+import MagneticButton from '../components/MagneticButton';
 
 export default function Signup() {
   const [name, setName] = useState('');
@@ -140,15 +141,15 @@ export default function Signup() {
               </div>
             </div>
 
-            <button type="submit" disabled={loading} id="signup-submit"
-              className="w-full py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-xl text-sm font-semibold hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300 disabled:opacity-50 cursor-pointer">
+            <MagneticButton type="submit" disabled={loading} id="signup-submit"
+              className="w-full py-3 bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-xl text-sm font-semibold hover:shadow-[0_0_20px_rgba(59,130,246,0.5)] transition-all duration-300 disabled:opacity-50 cursor-pointer">
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
                   <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>
                   Creating account...
                 </span>
               ) : 'Create Account'}
-            </button>
+            </MagneticButton>
           </form>
 
           <div className="mt-6 pt-6 border-t border-white/10 text-center">
